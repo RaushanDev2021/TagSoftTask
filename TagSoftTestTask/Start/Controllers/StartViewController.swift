@@ -15,7 +15,7 @@ class StartViewController: UIViewController {
     }
     
     @IBAction func startButtonDidPress(_ sender: UIButton) {
-        let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CharactersTableViewController")
+        let vc = UIStoryboard.createViewController(storyboard: .characters, controllerType: CharactersTableViewController.self)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -33,13 +33,10 @@ class CharacterDetailTableViewController: UITableViewController {
     
     private func setupUI(){
         navigationItem.title = character?.name
-        if let url = URL(string: character?.image ?? "") {
-           profileImageView.load(url: url)
-        }
+            profileImageView.load(urlString: character?.image ?? "")
         statusLabel.text = "Status: \(character?.status ?? "")"
         specyLabel.text = "Specy: \(character?.species ?? "")"
         genderLabel.text = "Gender: \(character?.gender ?? "")"
-
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -59,7 +56,7 @@ extension CharacterDetailTableViewController: CharactersManagerDelegate {
     }
     
     func didFailWithError(error: Error) {
-        print(error.localizedDescription)
+        showAlert(title: "Error", messageBody: error.localizedDescription)
     }
 }
 

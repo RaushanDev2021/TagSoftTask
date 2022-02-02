@@ -20,13 +20,22 @@ extension CharactersManagerDelegate {
 }
 
 class CharactersManager {
-    let charactersURL = "https://rickandmortyapi.com/api/character"
     
+    let charactersURL = "https://rickandmortyapi.com/api/character"
+    var model:BaseModel? = BaseModel()
     weak var delegate: CharactersManagerDelegate?
     
     func fetchCharacters() {
-        perform(with: charactersURL, type: BaseModel.self) { baseModel in
-            self.delegate?.didUpdateCharacters(self, characters: baseModel.results)
+        perform(with: model?.nextCharacterUrl ?? charactersURL, type: RequestModel<CharacterModel>.self) { requestModel in
+            self.model?.nextCharacterUrl = requestModel.info?.next
+            if (self.model?.characters?.count ?? 0) == 0 {
+                self.model?.characters = requestModel.results
+            } else {
+                if let results = requestModel.results {
+                    self.model?.characters?.append(contentsOf: results)
+                }
+            }
+            self.delegate?.didUpdateCharacters(self, characters: self.model?.characters ?? [])
         }
     }
     
@@ -40,7 +49,6 @@ class CharactersManager {
     func perform<T:Decodable>(with urlString: String,
                               type: T.Type,
                               completionHandler: @escaping (T) -> Void) {
-            
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { [weak self] (data, response, error) in

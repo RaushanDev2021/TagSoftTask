@@ -8,6 +8,7 @@
 import Foundation
 
 enum AppStoryboard: String {
-    
-    case main = "Main"
+    case start = "Start"
+    case characters = "Characters"
+    case characterDetail = "CharacterDetail"
 }

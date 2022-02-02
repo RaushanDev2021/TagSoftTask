@@ -22,11 +22,5 @@ class CharacterTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    func setupWith(character: CharacterModel) {
-        nameLabel.text = character.name
-        if let url = URL(string: character.image ?? "") {
-           characterImageView.load(url: url)
-        }
-    }
+
 }

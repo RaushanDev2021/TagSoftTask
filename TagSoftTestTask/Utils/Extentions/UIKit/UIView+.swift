@@ -40,7 +40,6 @@ extension UIView {
         }
     }
     
-    
     @IBInspectable
     var borderColor: UIColor? {
         get {
@@ -50,6 +49,4 @@ extension UIView {
             layer.borderColor = newValue?.cgColor
         }
     }
-    
-    
 }
